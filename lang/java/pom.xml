@@ -91,7 +91,6 @@
     <module>thrift</module>
     <module>archetypes</module>
     <module>grpc</module>
-    <module>integration-test</module>
     <module>perf</module>
   </modules>
 
