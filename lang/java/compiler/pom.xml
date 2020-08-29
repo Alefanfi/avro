@@ -43,6 +43,9 @@
       *
     </osgi.import>
     <osgi.export>org.apache.avro.compiler*;version="${project.version}"</osgi.export>
+
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
   </properties>
 
   <build>

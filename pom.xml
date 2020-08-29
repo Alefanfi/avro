@@ -56,10 +56,15 @@
     <rat.version>0.13</rat.version>
     <source-plugin.version>3.2.1</source-plugin.version>
     <spotless-maven-plugin.version>1.31.1</spotless-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
+
 
   <modules>
     <module>lang/java</module>
+    <module>tests</module>
   </modules>
 
   <scm>

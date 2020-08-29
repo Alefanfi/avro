@@ -45,6 +45,11 @@
     </osgi.import>
     <osgi.export>org.apache.avro.ipc*;version="${project.version}"</osgi.export>
     <osgi.dynamic.import>org.apache.avro.ipc.jetty,org.apache.avro.ipc.netty</osgi.dynamic.import>
+
+
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+
   </properties>
 
   <build>

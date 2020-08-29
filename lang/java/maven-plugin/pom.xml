@@ -36,6 +36,10 @@
   <properties>
     <main.basedir>${project.parent.parent.basedir}</main.basedir>
     <pluginTestingVersion>3.3.0</pluginTestingVersion>
+
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+
   </properties>
 
   <build>
