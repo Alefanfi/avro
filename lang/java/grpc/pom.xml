@@ -6,9 +6,7 @@
    The ASF licenses this file to You under the Apache License, Version 2.0
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
-
        https://www.apache.org/licenses/LICENSE-2.0
-
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,9 +40,6 @@
       *
     </osgi.import>
     <osgi.export>org.apache.avro.grpc*;version="${project.version}"</osgi.export>
-
-    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-
   </properties>
 
   <build>
@@ -83,27 +78,6 @@
                   </includes>
                 </bannedDependencies>
               </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>avro-maven-plugin</artifactId>
-        <version>${project.version}</version>
-        <executions>
-          <execution>
-            <id>schemas</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>schema</goal>
-              <goal>protocol</goal>
-              <goal>idl-protocol</goal>
-            </goals>
-            <configuration>
-              <stringType>String</stringType>
-              <testSourceDirectory>${project.basedir}/src/test/avro</testSourceDirectory>
-              <testOutputDirectory>${project.build.directory}/generated-test-sources/java</testOutputDirectory>
             </configuration>
           </execution>
         </executions>

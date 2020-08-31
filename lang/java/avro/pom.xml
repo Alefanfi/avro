@@ -33,6 +33,7 @@
   <packaging>bundle</packaging>
 
   <properties>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <main.basedir>${project.parent.parent.basedir}</main.basedir>
     <osgi.import>
       !org.apache.avro*,
@@ -42,183 +43,96 @@
       *
     </osgi.import>
     <osgi.export>org.apache.avro*;version="${project.version}"</osgi.export>
-
-    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-
   </properties>
-
-  <build>
-    <resources>
-      <resource>
-        <directory>../../../share/schemas</directory>
-        <includes>
-          <include>org/apache/avro/data/Json.avsc</include>
-        </includes>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Automatic-Module-Name>org.apache.avro</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <parallel>none</parallel>
-        </configuration>
-        <executions>
-          <execution>
-            <id>test-with-custom-coders</id>
-            <phase>test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <systemPropertyVariables>
-                <org.apache.avro.specific.use_custom_coders>true</org.apache.avro.specific.use_custom_coders>
-              </systemPropertyVariables>
-            </configuration>
-          </execution>
-          <execution>
-            <id>test-with-fast-reader</id>
-            <phase>test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <systemPropertyVariables>
-                <org.apache.avro.fastread>true</org.apache.avro.fastread>
-              </systemPropertyVariables>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <profiles>
     <profile>
-      <id>interop-data-generate</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
+      <id>pit-mutation-coverage</id>
       <build>
+        <resources>
+          <resource>
+            <directory>../../../share/schemas</directory>
+            <includes>
+              <include>org/apache/avro/data/Json.avsc</include>
+            </includes>
+          </resource>
+        </resources>
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>${exec-plugin.version}</version>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>1.4.11</version>
+            <configuration>
+              <targetClasses>
+                <param>org.apache.avro.io.BinaryData</param>
+                <param>org.apache.avro.specific.SpecificData</param>
+
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.avro.io.TestBinaryDataCompare</param>
+                <param>org.apache.avro.specific.TestSpecificDataGetSchema</param>
+              </targetTests>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+              <archive>
+                <manifestEntries>
+                  <Automatic-Module-Name>org.apache.avro</Automatic-Module-Name>
+                </manifestEntries>
+              </archive>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <parallel>none</parallel>
+            </configuration>
             <executions>
-              <!-- Generate random data for interop tests, using null codec -->
               <execution>
-                <id>interop-generate-null-codec</id>
-                <phase>generate-resources</phase>
+                <id>test-with-custom-coders</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
                 <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java.avro</argument>
-                    <argument>100</argument>
-                  </arguments>
+                  <systemPropertyVariables>
+                    <org.apache.avro.specific.use_custom_coders>true</org.apache.avro.specific.use_custom_coders>
+                  </systemPropertyVariables>
                 </configuration>
-                <goals><goal>java</goal></goals>
               </execution>
-
-              <!-- Generate random data for interop tests, using deflate codec -->
               <execution>
-                <id>interop-generate-deflate-codec</id>
-                <phase>generate-resources</phase>
+                <id>test-with-fast-reader</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
                 <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_deflate.avro</argument>
-                    <argument>100</argument>
-                    <argument>deflate</argument>
-                  </arguments>
+                  <systemPropertyVariables>
+                    <org.apache.avro.fastread>true</org.apache.avro.fastread>
+                  </systemPropertyVariables>
                 </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using snappy codec -->
-              <execution>
-                <id>interop-generate-snappy-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_snappy.avro</argument>
-                    <argument>100</argument>
-                    <argument>snappy</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using bzip2 codec -->
-              <execution>
-                <id>interop-generate-bzip2-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_bzip2.avro</argument>
-                    <argument>100</argument>
-                    <argument>bzip2</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using xz codec -->
-              <execution>
-                <id>interop-generate-xz-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_xz.avro</argument>
-                    <argument>100</argument>
-                    <argument>xz</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using zstandard codec -->
-              <execution>
-                <id>interop-generate-zstandard-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_zstandard.avro</argument>
-                    <argument>100</argument>
-                    <argument>zstandard</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
               </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>1.4.11</version>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 
+
   <dependencies>
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>

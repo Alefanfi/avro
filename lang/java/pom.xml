@@ -95,6 +95,7 @@
     <module>archetypes</module>
     <module>grpc</module>
     <module>perf</module>
+    <module>tests</module>
   </modules>
 
   <build>
