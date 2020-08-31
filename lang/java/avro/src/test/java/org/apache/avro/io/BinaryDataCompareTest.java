@@ -6,15 +6,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import sun.jvmstat.perfdata.monitor.CountedTimerTaskUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.ScheduledExecutorService;
-
-import static org.junit.Assert.*;
 
 @RunWith(value = Parameterized.class)
 public class BinaryDataCompareTest {
