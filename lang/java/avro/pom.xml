@@ -49,6 +49,7 @@
     <profile>
       <id>pit-mutation-coverage</id>
       <build>
+
         <resources>
           <resource>
             <directory>../../../share/schemas</directory>
@@ -166,4 +167,8 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+    <build>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    </build>
 </project>

@@ -17,14 +17,13 @@
  */
 package org.apache.avro.reflect;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-
 import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.io.Decoder;
 import org.apache.avro.io.Encoder;
-
 import sun.misc.Unsafe;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 
 @SuppressWarnings("restriction")
 class FieldAccessUnsafe extends FieldAccess {
