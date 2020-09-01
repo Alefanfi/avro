@@ -1,15 +1,12 @@
 package org.apache.avro.io;
 
 import junit.framework.TestCase;
-import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -46,7 +43,6 @@ public class BinaryDataHashCodeTest extends TestCase {
 
       {Schema.Type.NULL, true, 0, 1, Schema.Type.RECORD, 0},
       {Schema.Type.UNION, true, 1, 0, Schema.Type.UNION, 0}
-      //{1, 0, Schema.Type.UNION, Schema.Type.UNION, Schema.Type.UNION, false, true, 1}
 
     });
   }
