@@ -61,7 +61,7 @@ public class BinaryDataCompareTest {
       {0, 0, Schema.Type.INT, Schema.Type.DOUBLE, Schema.Type.ARRAY, true, false, 1},
       {0, 0, Schema.Type.INT, Schema.Type.DOUBLE, Schema.Type.MAP, true, false, 0},
       {0, 0, Schema.Type.FLOAT, Schema.Type.DOUBLE, Schema.Type.FLOAT, true, false, 1},
-      {0, 0, Schema.Type.ENUM, Schema.Type.ENUM, Schema.Type.FLOAT, true, false, 0}/*,
+      {0, 0, Schema.Type.ENUM, Schema.Type.ENUM, Schema.Type.FLOAT, true, false, 0},
 
       {1, 0, Schema.Type.ARRAY, Schema.Type.ARRAY, Schema.Type.ARRAY, true, false, -1},
       {0, 0, Schema.Type.RECORD, Schema.Type.RECORD, Schema.Type.RECORD, true, true, 0},
@@ -74,7 +74,7 @@ public class BinaryDataCompareTest {
       {1, 0, Schema.Type.STRING, Schema.Type.STRING, Schema.Type.STRING, false, true, 0},
       {0, 0, Schema.Type.BOOLEAN, Schema.Type.BOOLEAN, Schema.Type.BOOLEAN, true, false, 1},
       {0, 0, Schema.Type.FIXED, Schema.Type.FIXED, Schema.Type.FIXED, true, false, -1},
-      {1, 0, Schema.Type.UNION, Schema.Type.UNION, Schema.Type.UNION, true, false, 1}*/
+      {1, 0, Schema.Type.UNION, Schema.Type.UNION, Schema.Type.UNION, true, false, 1}
 
     });
   }

@@ -1,5 +1,6 @@
 package org.apache.avro.data;
 
+import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,6 +76,7 @@ public class TimeConversionsTest {
 
     TimeConversions.TimeMillisConversion timeMillisConversion = new TimeConversions.TimeMillisConversion();
 
+
     switch (typeTest) {
 
       case dateConversion_toInt:
@@ -85,7 +87,7 @@ public class TimeConversionsTest {
 
           LocalDate localDate = LocalDate.parse(stringConvert);
 
-          result = dataConversions.toInt(localDate, null, null);
+          result = dataConversions.toInt(localDate, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
 
         }else{
 
@@ -95,7 +97,7 @@ public class TimeConversionsTest {
 
       case dateConversion_fromInt:
 
-        result = dataConversions.fromInt(numberOfDay, null, null);
+        result = dataConversions.fromInt(numberOfDay, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
 
         break;
 
