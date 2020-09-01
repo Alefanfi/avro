@@ -83,8 +83,6 @@ public class TimeConversionsTest {
 
         if (stringConvert.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
 
-          //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
           LocalDate localDate = LocalDate.parse(stringConvert);
 
           result = dataConversions.toInt(localDate, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
