@@ -41,8 +41,28 @@ public class BinaryDataHashCodeTest extends TestCase {
 
     return Arrays.asList(new Object[][]{
 
+      {Schema.Type.ENUM, true, 0, 0, Schema.Type.ENUM, 0},
+      {Schema.Type.MAP, true, 0, 0, Schema.Type.MAP, 0},
       {Schema.Type.NULL, true, 0, 1, Schema.Type.RECORD, 0},
-      {Schema.Type.UNION, true, 1, 0, Schema.Type.UNION, 0}
+      {Schema.Type.NULL, false, 1, 0, Schema.Type.UNION, 0},
+      {Schema.Type.NULL, true, 1, 0, Schema.Type.ARRAY, 0},
+      {Schema.Type.NULL, true, 1, 0, Schema.Type.BYTES, 0},
+      {Schema.Type.ARRAY, true, 0, 0, Schema.Type.NULL, 0},
+      {Schema.Type.ARRAY, false, 1, 2, Schema.Type.INT, 5},
+
+      {Schema.Type.ARRAY, false, 0, 0, Schema.Type.NULL, 0},
+      {Schema.Type.ARRAY, true, -1, 2, Schema.Type.NULL, 0},
+
+      {Schema.Type.ARRAY, true, 1, 2, Schema.Type.INT, -5},
+
+
+      //{Schema.Type.ARRAY, false, 1, 2, Schema.Type.ARRAY, 0},
+      //{Schema.Type.UNION, false, 1, 0, Schema.Type.UNION, 0},
+      //{Schema.Type.FIXED, true, 0, 0, Schema.Type.FIXED, 0},
+      //{Schema.Type.STRING, true, 0, 0, Schema.Type.STRING, 0},
+      //{Schema.Type.INT, false, 0, 0, Schema.Type.INT, 0},
+      //{Schema.Type.LONG, true, 0, 0, Schema.Type.LONG, 0},
+      //{Schema.Type.INT, false, 0, 1, Schema.Type.RECORD, 0}
 
     });
   }
@@ -69,6 +89,7 @@ public class BinaryDataHashCodeTest extends TestCase {
     } catch (Exception e) {
       e.printStackTrace();
       result = 0;
+
     }
 
     Assert.assertEquals(result, expected);

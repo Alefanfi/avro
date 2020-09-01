@@ -1,10 +1,10 @@
 package org.apache.avro.io;
 
-import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericFixed;
 import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.generic.GenericData.Array;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.junit.Assert;
 
@@ -146,19 +146,31 @@ public class BinaryDataUtils {
         stringa = "{\"type\": \"array\", \"items\": \"int\"}";
         schema = new Schema.Parser().parse(stringa);
 
-        a = new GenericData.Record(schema);
-        datumWriter = new SpecificDatumWriter<>(schema);
+        SpecificDatumWriter<Array> datumWriterArray = new SpecificDatumWriter<>(schema);
+        GenericData.Array<Integer> c;
 
         if(b){
 
-          a.put("items", "5");
+          c = new GenericData.Array<Integer>(3, schema);
+
+          c.add(-5);
+          c.add(-2);
+          c.add(0);
+          c.add(5);
 
         }else{
 
-          a.put("items", "50");
+          c = new GenericData.Array<Integer>(5, schema);
+
+          c.add(5);
+          c.add(2);
+          c.add(1);
+          c.add(7);
+          c.add(-5);
+
         }
 
-        datumWriter.write(a, binaryEncoder);
+        datumWriterArray.write(c, binaryEncoder);
         binaryEncoder.flush();
 
         bytes = out.toByteArray();
@@ -167,7 +179,8 @@ public class BinaryDataUtils {
 
       case MAP:
 
-        throw new AvroRuntimeException("Can't compare maps!");
+        //Exeption
+        break;
 
       case FIXED:
 

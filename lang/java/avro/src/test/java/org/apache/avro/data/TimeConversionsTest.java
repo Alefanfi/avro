@@ -2,12 +2,17 @@ package org.apache.avro.data;
 
 import org.apache.avro.Schema;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -66,15 +71,21 @@ public class TimeConversionsTest {
   @Test
   public void test(){
 
+    TimeConversions.DateConversion dataConversions = new TimeConversions.DateConversion();
+
+    TimeConversions.TimeMillisConversion timeMillisConversion = new TimeConversions.TimeMillisConversion();
+
     switch (typeTest) {
 
       case dateConversion_toInt:
 
-        if (stringConvert.matches("^\\d{4}-\\d{2}-\\d{2}$")){
+        if (stringConvert.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
+
+          //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
           LocalDate localDate = LocalDate.parse(stringConvert);
 
-          result = new TimeConversions.DateConversion().toInt(localDate, null, null);
+          result = dataConversions.toInt(localDate, null, null);
 
         }else{
 
@@ -84,7 +95,7 @@ public class TimeConversionsTest {
 
       case dateConversion_fromInt:
 
-        result = new TimeConversions.DateConversion().fromInt(numberOfDay, null, null);
+        result = dataConversions.fromInt(numberOfDay, null, null);
 
         break;
 
@@ -94,7 +105,7 @@ public class TimeConversionsTest {
 
           LocalTime localTime = LocalTime.parse(stringConvert);
 
-          result = new TimeConversions.TimeMillisConversion().toInt(localTime, null, null);
+          result = timeMillisConversion.toInt(localTime, null, null);
 
         }else{
 
@@ -112,7 +123,7 @@ public class TimeConversionsTest {
 
         } else{
 
-          result = new TimeConversions.TimeMillisConversion().fromInt(numberOfDay, null, null);
+          result = timeMillisConversion.fromInt(numberOfDay, null, null);
 
         }
 
