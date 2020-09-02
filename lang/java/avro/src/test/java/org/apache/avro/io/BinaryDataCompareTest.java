@@ -1,6 +1,5 @@
 package org.apache.avro.io;
 
-import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,17 +13,15 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class BinaryDataCompareTest {
 
-  private int s1;
-  private int s2;
-  private Schema.Type type1;
-  private Schema.Type type2;
-  private Schema.Type typeSchema;
-  private Boolean bB1;
-  private Boolean bB2;
-  private String test = "compare";
+  private final int s1;
+  private final int s2;
+  private final Schema.Type type1;
+  private final Schema.Type type2;
+  private final Schema.Type typeSchema;
+  private final Boolean bB1;
+  private final Boolean bB2;
 
-  private Object expected;
-  private Object result;
+  private final Object expected;
 
   public BinaryDataCompareTest(int s1,  int s2, Schema.Type type1, Schema.Type type2, Schema.Type typeSchema, Boolean bB1, Boolean bB2, Object expected) {
 
@@ -82,12 +79,15 @@ public class BinaryDataCompareTest {
   @Test
   public void test(){
 
+    Object result;
+
     try {
 
       if(typeSchema != Schema.Type.MAP) {
 
         Schema schema = BinaryDataUtils.createSchema(typeSchema);
 
+        String test = "compare";
         byte[] b1 = BinaryDataUtils.createByteArray(type1, bB1, test);
 
         byte[] b2 = BinaryDataUtils.createByteArray(type2, bB2, test);

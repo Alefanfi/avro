@@ -151,7 +151,7 @@ public class BinaryDataUtils {
 
         if(b){
 
-          c = new GenericData.Array<Integer>(3, schema);
+          c = new GenericData.Array<>(3, schema);
 
           c.add(-5);
           c.add(-2);
@@ -160,7 +160,7 @@ public class BinaryDataUtils {
 
         }else{
 
-          c = new GenericData.Array<Integer>(5, schema);
+          c = new GenericData.Array<>(5, schema);
 
           c.add(5);
           c.add(2);
