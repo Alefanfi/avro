@@ -119,21 +119,19 @@ public class TimeConversionsTest {
     TimeConversions.DateConversion dataConversions = new TimeConversions.DateConversion();
 
     TimeConversions.TimeMillisConversion timeMillisConversion = new TimeConversions.TimeMillisConversion();
-
     TimeConversions.TimeMicrosConversion timeMicrosConversion = new TimeConversions.TimeMicrosConversion();
 
     TimeConversions.TimestampMicrosConversion timestampMicrosConversion = new TimeConversions.TimestampMicrosConversion();
-
     TimeConversions.TimestampMillisConversion timestampMillisConversion = new TimeConversions.TimestampMillisConversion();
 
     TimeConversions.LocalTimestampMicrosConversion localTimestampMicrosConversion = new TimeConversions.LocalTimestampMicrosConversion();
-
     TimeConversions.LocalTimestampMillisConversion localTimestampMillisConversion = new TimeConversions.LocalTimestampMillisConversion();
 
     String s;
     Integer numberOfDay;
     long convertedLong;
     LocalTime localTime;
+    LocalDateTime localDateTime;
 
     Object result = null;
 
@@ -148,6 +146,7 @@ public class TimeConversionsTest {
           LocalDate localDate = LocalDate.parse(s);
 
           result = dataConversions.toInt(localDate, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
+
         } catch (Exception e) {
 
           result = e.getClass();
@@ -325,7 +324,7 @@ public class TimeConversionsTest {
 
           s = String.valueOf(input);
 
-          LocalDateTime localDateTime = LocalDateTime.parse(s);
+          localDateTime = LocalDateTime.parse(s);
 
           result = localTimestampMicrosConversion.toLong(localDateTime, LogicalTypes.localTimestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.localTimestampMicros());
 
@@ -358,7 +357,7 @@ public class TimeConversionsTest {
 
           s = String.valueOf(input);
 
-          LocalDateTime localDateTime = LocalDateTime.parse(s);
+          localDateTime = LocalDateTime.parse(s);
 
           result = localTimestampMillisConversion.toLong(localDateTime, LogicalTypes.localTimestampMillis().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.localTimestampMillis());
 
