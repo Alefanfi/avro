@@ -110,7 +110,7 @@ public class BinaryDataCompareTest {
 
     } catch (IOException e) {
       e.printStackTrace();
-      result = 0;
+      result = e.getClass();
     }
 
     Assert.assertEquals(result, expected);

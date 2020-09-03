@@ -88,7 +88,7 @@ public class BinaryDataHashCodeTest extends TestCase {
 
     } catch (Exception e) {
       e.printStackTrace();
-      result = 0;
+      result = e.getClass();
 
     }
 
