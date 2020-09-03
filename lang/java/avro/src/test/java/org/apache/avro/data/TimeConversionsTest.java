@@ -61,10 +61,10 @@ public class TimeConversionsTest {
       {dateConversion_fromInt, 18215, LocalDate.of(2019,11,15)},
       {dateConversion_fromInt, 0, LocalDate.of(1970,1,1)},
       {dateConversion_fromInt, -18215, LocalDate.of(1920,2,18)},
+      {dateConversion_fromInt, "2dfv", ClassCastException.class},
 
       {timeMillisConversion_toInt, "19:34:50.63", 70490630},
       {timeMillisConversion_toInt, "00:00", 0},
-      {timeMillisConversion_toInt, "", DateTimeParseException.class},
       {timeMillisConversion_toInt, "cg:ds:fd.df", DateTimeParseException.class},
 
       {timeMillisConversion_fromInt, 70490630, LocalTime.parse("19:34:50.63")},
@@ -85,7 +85,7 @@ public class TimeConversionsTest {
 
       {timestampMicrosConversion_toLong, "2018-05-12T23:30:00Z", 1526167800000000L},
       {timestampMillisConversion_toLong, "00:00", DateTimeParseException.class},
-      {timestampMicrosConversion_toLong, "", DateTimeParseException.class},
+      {timestampMicrosConversion_toLong, 223456, DateTimeParseException.class},
 
       {timestampMillisConversion_fromLong, 1432849613222L, ZonedDateTime.of(2015, 5, 28, 21, 46, 53, 222_000_000, ZoneOffset.UTC).toInstant()},
       {timestampMillisConversion_fromLong, -1432849613221L, ZonedDateTime.of(1924,8,6,2,13,6,779_000_000, ZoneOffset.UTC).toInstant()},
@@ -141,9 +141,9 @@ public class TimeConversionsTest {
 
       case dateConversion_toInt:
 
-        s = String.valueOf(input);
-
         try {
+
+          s = String.valueOf(input);
 
           LocalDate localDate = LocalDate.parse(s);
 
@@ -158,17 +158,23 @@ public class TimeConversionsTest {
 
       case dateConversion_fromInt:
 
-        numberOfDay = (Integer) input;
+        try {
 
-        result = dataConversions.fromInt(numberOfDay, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
+          numberOfDay = (Integer) input;
 
+          result = dataConversions.fromInt(numberOfDay, LogicalTypes.date().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.date());
+
+        } catch (Exception e) {
+
+          result = e.getClass();
+        }
         break;
 
       case timeMillisConversion_toInt:
 
-        s = String.valueOf(input);
-
         try {
+
+          s = String.valueOf(input);
 
           localTime = LocalTime.parse(s);
 
@@ -184,9 +190,9 @@ public class TimeConversionsTest {
 
       case timeMillisConversion_fromInt:
 
-        numberOfDay = (Integer) input;
-
         try{
+
+          numberOfDay = (Integer) input;
 
           result = timeMillisConversion.fromInt(numberOfDay, LogicalTypes.timeMillis().addToSchema(Schema.create(Schema.Type.INT)), LogicalTypes.timeMillis());
 
@@ -200,10 +206,10 @@ public class TimeConversionsTest {
 
       case timeMicrosConversion_fromLong:
 
-        s = String.valueOf(input);
-        convertedLong = Long.parseLong(s);
-
         try{
+
+          s = String.valueOf(input);
+          convertedLong = Long.parseLong(s);
 
           result = timeMicrosConversion.fromLong(convertedLong, LogicalTypes.timeMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timeMicros());
 
@@ -216,9 +222,9 @@ public class TimeConversionsTest {
 
       case timeMicrosConversion_toLong:
 
-        s = String.valueOf(input);
-
         try{
+
+          s = String.valueOf(input);
 
           localTime = LocalTime.parse(s);
 
@@ -233,18 +239,24 @@ public class TimeConversionsTest {
 
       case timestampMicrosConversion_fromLong:
 
-        s = String.valueOf(input);
-        convertedLong = Long.parseLong(s);
+        try {
 
-        result = timestampMicrosConversion.fromLong(convertedLong, LogicalTypes.timestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMicros());
+          s = String.valueOf(input);
+          convertedLong = Long.parseLong(s);
 
+          result = timestampMicrosConversion.fromLong(convertedLong, LogicalTypes.timestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMicros());
+
+        } catch (NumberFormatException e) {
+
+          result = e.getClass();
+        }
         break;
 
       case timestampMicrosConversion_toLong:
 
-        s = String.valueOf(input);
-
         try{
+
+          s = String.valueOf(input);
 
           Instant instant = Instant.parse(s);
 
@@ -260,18 +272,24 @@ public class TimeConversionsTest {
 
       case timestampMillisConversion_fromLong:
 
-        s = String.valueOf(input);
-        convertedLong = Long.parseLong(s);
+        try {
 
-        result = timestampMillisConversion.fromLong(convertedLong, LogicalTypes.timestampMillis().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMillis());
+          s = String.valueOf(input);
+          convertedLong = Long.parseLong(s);
 
+          result = timestampMillisConversion.fromLong(convertedLong, LogicalTypes.timestampMillis().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMillis());
+
+        } catch (NumberFormatException e) {
+
+          result = e.getClass();
+        }
         break;
 
       case timestampMillisConversion_toLong:
 
-        s = String.valueOf(input);
-
         try{
+
+          s = String.valueOf(input);
 
           Instant instant = Instant.parse(s);
 
@@ -286,8 +304,10 @@ public class TimeConversionsTest {
 
       case localTimestampMicrosConversion_fromLong:
 
-        s = String.valueOf(input);
         try {
+
+          s = String.valueOf(input);
+
           convertedLong = Long.parseLong(s);
 
           result = localTimestampMicrosConversion.fromLong(convertedLong, LogicalTypes.localTimestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.localTimestampMicros());
@@ -301,9 +321,9 @@ public class TimeConversionsTest {
 
       case localTimestampMicrosConversion_toLong:
 
-        s = String.valueOf(input);
-
         try {
+
+          s = String.valueOf(input);
 
           LocalDateTime localDateTime = LocalDateTime.parse(s);
 
@@ -318,9 +338,9 @@ public class TimeConversionsTest {
 
       case localTimestampMillisConversion_fromLong:
 
-        s = String.valueOf(input);
-
         try{
+
+          s = String.valueOf(input);
 
           convertedLong = Long.parseLong(s);
 
@@ -334,9 +354,9 @@ public class TimeConversionsTest {
 
       case localTimestampMillisConversion_toLong:
 
-        s = String.valueOf(input);
-
         try {
+
+          s = String.valueOf(input);
 
           LocalDateTime localDateTime = LocalDateTime.parse(s);
 
@@ -348,7 +368,6 @@ public class TimeConversionsTest {
         }
 
         break;
-
 
       default:
         throw new IllegalStateException("Unexpected value: " + typeTest);
