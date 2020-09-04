@@ -43,6 +43,9 @@ public class BinaryDataHashCodeTest {
       {Schema.Type.NULL, false, 1, 0, Schema.Type.UNION, 0},
       {Schema.Type.NULL, true, 1, 0, Schema.Type.BYTES, 0},
       {Schema.Type.ARRAY, true, 0, 0, Schema.Type.NULL, 0},
+      {Schema.Type.ARRAY, false, 0, 0, Schema.Type.NULL, 0},
+      {Schema.Type.ARRAY, true, -1, 2, Schema.Type.NULL, 0},
+      {Schema.Type.NULL, true, 1, 0, Schema.Type.ARRAY, 0},
       {Schema.Type.ARRAY, true, 0, 0, Schema.Type.FLOAT, AvroRuntimeException.class},
       {Schema.Type.ARRAY, false, 1, 2, Schema.Type.INT, 5},
       {Schema.Type.LONG, true, 1, 2, Schema.Type.LONG, AvroRuntimeException.class},
@@ -61,6 +64,13 @@ public class BinaryDataHashCodeTest {
       {Schema.Type.FIXED, true, 0, 0, Schema.Type.FIXED, AvroRuntimeException.class},
       {Schema.Type.BYTES, false, 1, 3, Schema.Type.BYTES, ArrayIndexOutOfBoundsException.class},
       {Schema.Type.MAP, true, 0, 0, Schema.Type.RECORD, 0},
+
+      {Schema.Type.STRING, true, 0, 0, Schema.Type.STRING, AvroRuntimeException.class},
+      {Schema.Type.INT, false, 0, 0, Schema.Type.INT, AvroRuntimeException.class},
+      {Schema.Type.LONG, true, 0, 0, Schema.Type.LONG, AvroRuntimeException.class},
+      {Schema.Type.INT, false, 0, 1, Schema.Type.RECORD, AvroRuntimeException.class},
+      {Schema.Type.ARRAY, false, 1, 2, Schema.Type.ARRAY, AvroRuntimeException.class},
+      {Schema.Type.BOOLEAN, false, 1, 0, Schema.Type.BOOLEAN,AvroRuntimeException.class},
 
 
     });
