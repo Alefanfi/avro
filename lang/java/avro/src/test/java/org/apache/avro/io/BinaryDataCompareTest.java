@@ -1,5 +1,6 @@
 package org.apache.avro.io;
 
+import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
 import org.junit.Assert;
 import org.junit.Test;
@@ -71,7 +72,8 @@ public class BinaryDataCompareTest {
       {1, 0, Schema.Type.STRING, Schema.Type.STRING, Schema.Type.STRING, false, true, 0},
       {0, 0, Schema.Type.BOOLEAN, Schema.Type.BOOLEAN, Schema.Type.BOOLEAN, true, false, 1},
       {0, 0, Schema.Type.FIXED, Schema.Type.FIXED, Schema.Type.FIXED, true, false, -1},
-      {1, 0, Schema.Type.UNION, Schema.Type.UNION, Schema.Type.UNION, true, false, 1}
+      {1, 0, Schema.Type.UNION, Schema.Type.UNION, Schema.Type.UNION, true, false, 1},
+
 
     });
   }

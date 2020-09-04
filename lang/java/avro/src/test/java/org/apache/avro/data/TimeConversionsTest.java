@@ -83,9 +83,10 @@ public class TimeConversionsTest {
       {timestampMicrosConversion_fromLong, -1432849613221L, ZonedDateTime.of(1969,12,15,9,59,10,386_779_000, ZoneOffset.UTC).toInstant()},
       {timestampMicrosConversion_fromLong, 0, ZonedDateTime.of(1970, 1, 1, 0, 0, 0,0, ZoneOffset.UTC).toInstant()},
 
-      {timestampMicrosConversion_toLong, "2018-05-12T23:30:00Z", 1526167800000000L},
+      {timestampMicrosConversion_toLong, "2018-05-12T23:30:04Z", 1526167804000000L},
+      {timestampMicrosConversion_toLong, ZonedDateTime.of(1969, 12, 15, 9, 59, 10, 386_779_000, ZoneOffset.UTC).toInstant(), -1432849613221L},
       {timestampMillisConversion_toLong, "00:00", DateTimeParseException.class},
-      {timestampMicrosConversion_toLong, 223456, DateTimeParseException.class},
+      {timestampMicrosConversion_toLong, 223456, null},
 
       {timestampMillisConversion_fromLong, 1432849613222L, ZonedDateTime.of(2015, 5, 28, 21, 46, 53, 222_000_000, ZoneOffset.UTC).toInstant()},
       {timestampMillisConversion_fromLong, -1432849613221L, ZonedDateTime.of(1924,8,6,2,13,6,779_000_000, ZoneOffset.UTC).toInstant()},
@@ -255,11 +256,21 @@ public class TimeConversionsTest {
 
         try{
 
-          s = String.valueOf(input);
+          if(input instanceof String) {
+            s = String.valueOf(input);
 
-          Instant instant = Instant.parse(s);
+            Instant instant = Instant.parse(s);
+
 
           result = timestampMicrosConversion.toLong(instant, LogicalTypes.timestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMicros());
+
+          }else if(input instanceof Instant){
+
+            Instant ii = (Instant) input;
+
+            result = timestampMicrosConversion.toLong(ii, LogicalTypes.timestampMicros().addToSchema(Schema.create(Schema.Type.LONG)), LogicalTypes.timestampMicros());
+
+          }
 
         } catch (Exception e) {
 
