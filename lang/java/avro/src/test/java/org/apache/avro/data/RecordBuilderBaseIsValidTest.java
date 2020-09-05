@@ -9,6 +9,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+
 @RunWith(value = Parameterized.class)
 public class RecordBuilderBaseIsValidTest {
 
@@ -67,6 +68,63 @@ public class RecordBuilderBaseIsValidTest {
 
     Assert.assertEquals(result, expected);
 
+  }
+/*
+  @Test
+  public void testIsValidValueWithUnion() {
+    // Verify that null values are not valid for a union with no null type:
+    Schema unionWithoutNull = Schema
+      .createUnion(Arrays.asList(Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.BOOLEAN)));
+
+    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithoutNull, null, null), new Object()));
+    Assert.assertFalse(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithoutNull, null, null), null));
+
+    // Verify that null values are valid for a union with a null type:
+    Schema unionWithNull = Schema.createUnion(Arrays.asList(Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.NULL)));
+
+    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithNull, null, null), new Object()));
+    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithNull, null, null), null));
+  }
+  */
+
+  @Test
+  public void testUNION(){
+
+    Schema schemaUnionNull = Schema.createUnion(Arrays.asList(
+      Schema.create(Schema.Type.INT), Schema.create(Schema.Type.LONG),
+      Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.FLOAT),
+      Schema.create(Schema.Type.DOUBLE), Schema.create(Schema.Type.BOOLEAN),
+      Schema.create(Schema.Type.NULL)));
+
+    Schema.Field field = createField2(schemaUnionNull);
+
+    Assert.assertTrue(RecordBuilderBase.isValidValue(field, new Object()));
+    Assert.assertTrue(RecordBuilderBase.isValidValue(field, null));
+
+    Schema schemaUnion = Schema.createUnion(Arrays.asList(
+      Schema.create(Schema.Type.INT), Schema.create(Schema.Type.LONG),
+      Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.FLOAT),
+      Schema.create(Schema.Type.DOUBLE), Schema.create(Schema.Type.BOOLEAN)));
+
+    Schema.Field field2 = createField2(schemaUnion);
+
+    Assert.assertTrue(RecordBuilderBase.isValidValue(field2, new Object()));
+    Assert.assertFalse(RecordBuilderBase.isValidValue(field2, null));
+  }
+
+  private Schema.Field createField2(Schema schema) {
+
+    Schema.Field f = null;
+
+    try{
+
+      f = new Schema.Field("f", schema, null, null);
+
+    } catch (Exception e) {
+      return null;
+    }
+
+    return f;
   }
 
 
