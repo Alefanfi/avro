@@ -69,23 +69,6 @@ public class RecordBuilderBaseIsValidTest {
     Assert.assertEquals(result, expected);
 
   }
-/*
-  @Test
-  public void testIsValidValueWithUnion() {
-    // Verify that null values are not valid for a union with no null type:
-    Schema unionWithoutNull = Schema
-      .createUnion(Arrays.asList(Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.BOOLEAN)));
-
-    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithoutNull, null, null), new Object()));
-    Assert.assertFalse(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithoutNull, null, null), null));
-
-    // Verify that null values are valid for a union with a null type:
-    Schema unionWithNull = Schema.createUnion(Arrays.asList(Schema.create(Schema.Type.STRING), Schema.create(Schema.Type.NULL)));
-
-    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithNull, null, null), new Object()));
-    Assert.assertTrue(RecordBuilderBase.isValidValue(new Schema.Field("f", unionWithNull, null, null), null));
-  }
-  */
 
   @Test
   public void testUNION(){
