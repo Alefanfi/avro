@@ -79,7 +79,7 @@ public class RecordBuilderBaseIsValidTest {
       f = new Schema.Field("f", Schema.create(type), null, null);
 
     } catch (Exception e) {
-      e.printStackTrace();
+      return null;
     }
 
     return f;
