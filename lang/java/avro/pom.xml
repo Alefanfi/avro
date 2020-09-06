@@ -65,13 +65,15 @@
             <version>1.4.11</version>
             <configuration>
               <targetClasses>
+                <param>org.apache.avro.data.RecordBuilderBase</param>
+                <param>org.apache.avro.data.TimeConversions</param>
                 <param>org.apache.avro.io.BinaryData</param>
-                <param>org.apache.avro.specific.SpecificData</param>
-
               </targetClasses>
               <targetTests>
-                <param>org.apache.avro.io.TestBinaryDataCompare</param>
-                <param>org.apache.avro.specific.TestSpecificDataGetSchema</param>
+                <param>org.apache.avro.data.RecordBuilderBaseIsValidTest</param>
+                <param>org.apache.avro.data.TimeConversionsTest</param>
+                <param>org.apache.avro.io.BinaryDataCompareTest</param>
+                <param>org.apache.avro.io.BinaryDataHashCodeTest</param>
               </targetTests>
             </configuration>
           </plugin>
@@ -170,5 +172,26 @@
 
     <build>
     <testSourceDirectory>src/test/java</testSourceDirectory>
+<!--
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>1.4.11</version>
+            <configuration>
+              <targetClasses>
+                <param>org.apache.avro.data.RecordBuilderBase</param>
+                <param>org.apache.avro.data.TimeConversions</param>
+                <param>org.apache.avro.io.BinaryData</param>
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.avro.data.RecordBuilderBaseIsValidTest</param>
+                <param>org.apache.avro.data.TimeConversionsTest</param>
+                <param>org.apache.avro.io.BinaryDataCompareTest</param>
+                <param>org.apache.avro.io.BinaryDataHashCodeTest</param>
+              </targetTests>
+            </configuration>
+          </plugin>
+        </plugins>-->
     </build>
 </project>
